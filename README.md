@@ -37,8 +37,9 @@ Get the details of a specific superhero in JSON format
       
 <h4> Create superhero </h4>
 
-    POST /api/superhero <br>   
-    Body { "name":"hero1",
+    POST /api/superhero 
+    Body {   
+             "name":"hero1",
              "description":"description",
              "pseudonym":"pseudonym",
              "publisher":"DC", - ( "DC" or "MARVEL"
@@ -55,12 +56,12 @@ Get the details of a specific superhero in JSON format
 <h4> Add powers to superhero </h4> 
 
     PUT /api/superheroes/{id}/powers   
-    Body { "idList" : [] }
+    Body { "idList" : [] - list of powers id's }
 
 <h4> Add allies to superhero </h4>
 
     PUT /api/superheroes/{id}/allies    
-    Body { "idList" : [] }
+    Body { "idList" : [] - list of allies id's }
 
 
 <h1> Public access </h1>
