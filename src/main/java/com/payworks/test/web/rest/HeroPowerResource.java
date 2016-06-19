@@ -1,10 +1,8 @@
 package com.payworks.test.web.rest;
 
 import com.payworks.test.domain.HeroPower;
-import com.payworks.test.domain.Superhero;
 import com.payworks.test.service.HeroPowerService;
 import com.payworks.test.web.dto.HeroPowerDto;
-import com.payworks.test.web.dto.SuperheroDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -7,10 +7,11 @@ import com.payworks.test.domain.Superhero;
 import com.payworks.test.repository.SuperheroRepository;
 import com.payworks.test.service.HeroPowerService;
 import com.payworks.test.service.SuperheroService;
+import com.payworks.test.web.dto.HeroPowerDto;
+import com.payworks.test.web.dto.IdsListDto;
+import com.payworks.test.web.dto.SuperheroDto;
 import com.payworks.test.web.util.TestSuperHeroDto;
 import com.payworks.test.web.util.TestUtil;
-import com.payworks.test.web.dto.HeroPowerDto;
-import com.payworks.test.web.dto.SuperheroDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -215,4 +217,60 @@ public class SuperheroResourceTest {
         resultActions.andExpect(jsonPath("$", hasSize(3)));
     }
 
+    @Test
+    @Transactional
+    public void testAddPowersToExistingHero() throws Exception {
+        //given
+        SuperheroDto superheroDto = new SuperheroDto();
+        superheroDto.setName(DEFAULT_HERO_NAME);
+        superheroDto.setPseudonym(DEFAULT_PSEUDONYM);
+        superheroDto.setPublisher(DEFAULT_PUBLISHER);
+
+        Superhero superhero = superheroService.createSuperhero(superheroDto);
+
+        assertThat(superhero.getPowers()).isEmpty();
+
+        IdsListDto idsListDto = new IdsListDto();
+        idsListDto.setIdList(powers);
+
+        //when
+        restMvc.perform(put(CREATE_HERO_ENDPOINT + "/" + superhero.getId() + "/powers")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(idsListDto)))
+                .andExpect(status().isOk());
+
+        //then
+
+        assertThat(superheroRepository.findOne(superhero.getId()).getPowers()).hasSize(powers.size());
+    }
+
+    @Test
+    @Transactional
+    public void testAddHeroesToExistingHero() throws Exception {
+        //given
+        SuperheroDto superheroDto = new SuperheroDto();
+        superheroDto.setName(DEFAULT_HERO_NAME);
+        superheroDto.setPseudonym(DEFAULT_PSEUDONYM);
+        superheroDto.setPublisher(DEFAULT_PUBLISHER);
+        superheroDto.setPowers(powers);
+
+        Superhero superhero = superheroService.createSuperhero(superheroDto);
+        Superhero ally = superheroService.createSuperhero(superheroDto);
+
+        assertThat(superhero.getAllies()).isEmpty();
+
+        IdsListDto idsListDto = new IdsListDto();
+        List<Long> ids = new LinkedList<>();
+        ids.add(ally.getId());
+        idsListDto.setIdList(ids);
+
+        //when
+        restMvc.perform(put(CREATE_HERO_ENDPOINT + "/" + superhero.getId() + "/allies")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(idsListDto)))
+                .andExpect(status().isOk());
+
+        //then
+        assertThat(superheroRepository.findOne(superhero.getId()).getAllies()).hasSize(1);
+    }
 }

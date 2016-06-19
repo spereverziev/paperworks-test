@@ -33,19 +33,14 @@ public class SuperheroResource {
         return ResponseEntity.ok(superheroService.getDetailed(id));
     }
 
-    @RequestMapping(value = "/api/superheroes/{id}/powers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/superheroes/{id}/powers", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addPowers(@PathVariable Long id, @Valid @RequestBody IdsListDto idsListDto) {
         return ResponseEntity.ok(superheroService.addPowers(id, idsListDto.getIdList()));
     }
 
-    @RequestMapping(value = "/api/superheroes/{id}/allies", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/superheroes/{id}/allies", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addAllies(@PathVariable Long id, @Valid @RequestBody IdsListDto idsListDto) {
         return ResponseEntity.ok(superheroService.addAllies(id, idsListDto.getIdList()));
-    }
-
-    @RequestMapping(value = "/api/superheroes/{id}/allies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllies(@PathVariable Long id) {
-        return ResponseEntity.ok(superheroService.getAllies(id));
     }
 
     @RequestMapping(value = "/api/superheroes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -4,8 +4,8 @@ import com.payworks.test.PayworksTestApplication;
 import com.payworks.test.domain.HeroPower;
 import com.payworks.test.repository.HeroPowerRepository;
 import com.payworks.test.service.HeroPowerService;
-import com.payworks.test.web.util.TestUtil;
 import com.payworks.test.web.dto.HeroPowerDto;
+import com.payworks.test.web.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

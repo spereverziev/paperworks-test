@@ -4,7 +4,6 @@ import com.payworks.test.domain.Publisher;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.List;
 
 public class TestSuperHeroDto {
